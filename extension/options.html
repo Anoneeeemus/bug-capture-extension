@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bug Report settings</title>
+<link rel="stylesheet" href="report.css">
+</head>
+<body>
+<main>
+  <h1>Bug Report settings</h1>
+
+  <h2>Where reports are saved</h2>
+  <p>Choose a folder and every report is saved straight into it, with no prompts: one row per report in
+    <code>reports.csv</code> and the pictures in <code>screenshots</code>. To send your reports, zip that folder and send the zip.</p>
+  <p>Create and pick a folder called <code>BUG_REPORTS</code>, for example on your Desktop. Chrome won't allow
+    Desktop, Documents or Downloads themselves.</p>
+  <p>If no folder is set yet, the first report you save will ask you to choose one.</p>
+  <div class="buttons">
+    <button type="button" id="chooseBtn" class="primary">Choose folder</button>
+    <button type="button" id="forgetBtn" hidden>Forget folder</button>
+  </div>
+  <p id="folderStatus" role="status" aria-live="polite">No folder chosen</p>
+
+  <h2>You</h2>
+  <form id="optionsForm" novalidate>
+    <div class="field">
+      <label for="userName">Your name</label>
+      <input type="text" id="userName" name="userName" autocomplete="name">
+    </div>
+    <div class="buttons">
+      <button type="submit" id="saveBtn">Save</button>
+    </div>
+    <p id="status" aria-live="polite"></p>
+  </form>
+</main>
+<script src="db.js"></script>
+<script src="options.js"></script>
+</body>
+</html>

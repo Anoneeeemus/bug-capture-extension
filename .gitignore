@@ -1,0 +1,29 @@
+# Working notes and scratch
+runs/
+scratch/
+*.scratch
+*.bak
+*.orig
+*.swp
+*~
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Test temp dirs (run_e2e.py --keep)
+bug-report-profile-*/
+bug-report-downloads-*/
+
+# Release zips live in GitHub Releases, not in git
+/*.zip
+dist/
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+# Local guide screenshot checker with machine-specific paths
+guide/src/check.py

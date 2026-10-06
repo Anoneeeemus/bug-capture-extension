@@ -1,0 +1,724 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bug Report: Install and User Guide</title>
+<style>
+  :root {
+    color-scheme: light;
+    --navy: #020737;
+    --rasp: #A02D57;
+    --teal: #377E7F;
+    --ink: #10142e;
+    --muted: #555a6b;
+    --line: #dcdee4;
+    --paper: #ffffff;
+    --ground: #f4f5f7;
+    --navy-tint: rgba(2, 7, 55, .05);
+    --rasp-tint: rgba(160, 45, 87, .07);
+    --rasp-line: rgba(160, 45, 87, .45);
+    --teal-tint: rgba(55, 126, 127, .08);
+    --teal-line: rgba(55, 126, 127, .55);
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font: 16px/1.6 "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  .wrap {
+    max-width: 880px;
+    margin: 0 auto;
+    padding-inline: 16px;
+    padding-block: 32px 64px;
+  }
+  header.top {
+    background: var(--navy);
+    color: #fff;
+    border: 1px solid var(--navy);
+    border-radius: 12px;
+    padding: 28px 28px 22px;
+    margin-bottom: 20px;
+  }
+  header.top .kicker {
+    font-size: 13px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.75);
+    margin: 0 0 6px;
+  }
+  h1 { font-size: 30px; line-height: 1.2; margin: 0 0 10px; color: #fff; }
+  h2 {
+    font-size: 22px;
+    line-height: 1.3;
+    margin: 0 0 12px;
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+    color: var(--navy);
+  }
+  h2 .num {
+    flex: none;
+    display: inline-grid;
+    place-items: center;
+    min-width: 34px;
+    height: 34px;
+    padding: 0 6px;
+    border-radius: 17px;
+    background: var(--navy);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    transform: translateY(-2px);
+  }
+  h3 { font-size: 18px; margin: 26px 0 8px; color: var(--navy); }
+  p { margin: 0 0 12px; }
+  ul, ol { margin: 0 0 12px; padding-left: 22px; }
+  li { margin-bottom: 4px; }
+  a { color: var(--navy); text-decoration-color: var(--teal); text-underline-offset: 2px; }
+  code, .mono {
+    font-family: Consolas, "Cascadia Mono", "SFMono-Regular", Menlo, monospace;
+    font-size: .92em;
+    background: var(--navy-tint);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 1px 5px;
+    overflow-wrap: anywhere;
+  }
+  section.card, .card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 26px 28px 14px;
+    margin-bottom: 20px;
+    scroll-margin-top: 16px;
+  }
+  .step {
+    border-top: 1px solid var(--teal-line);
+    padding-top: 18px;
+    margin-top: 18px;
+  }
+  .step:first-of-type { border-top: 0; padding-top: 0; margin-top: 4px; }
+  .step-title { font-weight: 600; margin-bottom: 6px; }
+  .step-title .sub {
+    display: inline-block;
+    min-width: 28px;
+    color: var(--teal);
+  }
+  figure { margin: 12px 0 16px; }
+  figure img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(20, 30, 50, .08);
+    background: #fff;
+  }
+  figure.narrow img { max-width: min(100%, 640px); }
+  figcaption { font-size: 14px; color: var(--muted); margin-top: 6px; }
+  .see {
+    border-left: 4px solid var(--teal);
+    background: var(--teal-tint);
+    color: var(--ink);
+    padding: 8px 12px;
+    border-radius: 0 6px 6px 0;
+    margin: 0 0 14px;
+    font-size: 15px;
+  }
+  .see strong { color: var(--teal); }
+  .callout {
+    border: 1px solid var(--rasp-line);
+    border-left: 6px solid var(--rasp);
+    background: var(--rasp-tint);
+    border-radius: 10px;
+    padding: 14px 16px 4px;
+    margin: 14px 0 18px;
+  }
+  .callout .label {
+    display: inline-block;
+    font-weight: 600;
+    color: #fff;
+    background: var(--rasp);
+    border-radius: 4px;
+    padding: 2px 10px;
+    margin-bottom: 8px;
+  }
+  .step-title strong, section > ol strong, section > .keep > ol strong { color: var(--rasp); }
+  .callout.big { border-width: 2px; border-left-width: 6px; }
+  .needs { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin: 14px 0 6px; }
+  .needs div {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 12px;
+    background: rgba(255,255,255,.08);
+    border-color: rgba(255,255,255,.25);
+    font-size: 15px;
+  }
+  .needs b { display: block; font-size: 13px; color: rgba(255,255,255,.75); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+  nav.toc ol { columns: 2 260px; column-gap: 28px; padding-left: 26px; margin: 0; }
+  nav.toc li { break-inside: avoid; }
+  nav.toc { border-top: 4px solid var(--teal); }
+  nav.toc h2 { font-size: 18px; color: var(--teal); }
+  nav.toc li::marker { color: var(--teal); font-weight: 600; }
+  .qa { border-top: 1px solid var(--teal-line); padding: 14px 0 4px; }
+  .qa:first-of-type { border-top: 0; padding-top: 4px; }
+  .qa .q { font-weight: 600; margin-bottom: 4px; }
+  .tablewrap { overflow-x: auto; margin: 6px 0 16px; }
+  table { border-collapse: collapse; width: 100%; min-width: 420px; font-size: 15px; }
+  th, td { text-align: left; border: 1px solid var(--line); padding: 8px 10px; vertical-align: top; }
+  th { background: var(--teal); color: #fff; border-color: var(--teal); }
+  .tree {
+    font-family: Consolas, "Cascadia Mono", "SFMono-Regular", Menlo, monospace;
+    font-size: 14px;
+    background: var(--teal-tint);
+    border: 1px solid var(--teal-line);
+    border-radius: 8px;
+    padding: 12px 14px;
+    overflow-x: auto;
+    white-space: pre;
+    margin: 0 0 14px;
+  }
+  .kbd {
+    display: inline-block;
+    font-family: inherit;
+    font-size: .9em;
+    border: 1px solid #b8c0cc;
+    border-bottom-width: 2px;
+    border-radius: 4px;
+    padding: 0 6px;
+    background: #fff;
+  }
+  footer { color: var(--muted); font-size: 14px; text-align: center; margin-top: 28px; }
+  @media (max-width: 560px) {
+    .wrap { padding-block: 16px 40px; }
+    header.top, section.card, .card { padding: 18px 16px 8px; border-radius: 10px; }
+    h1 { font-size: 25px; }
+    h2 { font-size: 19px; }
+    body { font-size: 15.5px; }
+  }
+  @page { size: A4; margin: 14mm 14mm 16mm; }
+  @media print {
+    body { background: #fff; font-size: 11pt; }
+    .wrap { max-width: none; padding: 0; }
+    section.card, .card { border: 0; padding: 0; margin: 0 0 18pt; border-radius: 0; }
+    header.top { margin: 0 0 18pt; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .callout, .see, h2 .num, th, .callout .label { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    section.card, .card { break-before: auto; }
+    h2, h3, .step-title { break-after: avoid; page-break-after: avoid; }
+    .step, figure, .callout, .qa, .see, table { break-inside: avoid; page-break-inside: avoid; }
+    figure { margin: 6pt 0 8pt; }
+    .keep { break-inside: avoid; page-break-inside: avoid; }
+    h2 .num { transform: none; }
+    .qa { padding: 7pt 0 0; }
+    .qa p { margin-bottom: 6pt; }
+    footer { margin-top: 12pt; }
+    figure img { max-width: 100% !important; max-height: 7.5cm; width: auto; box-shadow: none; }
+    figcaption { break-before: avoid; page-break-before: avoid; }
+    h2 + *, h3 + *, .step-title + * { break-before: avoid; page-break-before: avoid; }
+    a { color: inherit; text-decoration: none; }
+    nav.toc ol { columns: 2; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <p class="kicker">Install and user guide</p>
+  <h1>Bug Report for Google Chrome</h1>
+  <p>Bug Report is a small add-on for Google Chrome. When something on a website goes wrong, or you wish it worked differently, you click one button. It takes a picture of the whole page, asks you two short questions, and saves your answers and the picture to a folder on your own PC. When you are ready, you zip that folder and send it to us.</p>
+  <div class="needs">
+    <div><b>You need</b>A Windows PC</div>
+    <div><b>Browser</b>Google Chrome</div>
+    <div><b>The file</b><span class="mono">BugReport-extension-1.2.2.zip</span></div>
+    <div><b>Time</b>About 5 minutes</div>
+  </div>
+</header>
+
+<div class="callout big" id="chrome-only">
+  <p class="label">Use Google Chrome only</p>
+  <p>Please install and use Bug Report in <strong>Google Chrome</strong>. Other browsers, such as Brave or Microsoft Edge, look similar but won't save your reports correctly. If you don't have Chrome yet, download it free from <span class="mono">google.com/chrome</span> and install it first.</p>
+</div>
+
+<nav class="toc card" aria-label="Contents">
+  <h2>Contents</h2>
+  <ol>
+    <li><a href="#s1">Create your reports folder</a></li>
+    <li><a href="#s2">Unzip the extension</a></li>
+    <li><a href="#s3">Open Chrome's extensions page</a></li>
+    <li><a href="#s4">Turn on Developer mode</a></li>
+    <li><a href="#s5">Load the extension</a></li>
+    <li><a href="#s6">Pin the button to your toolbar</a></li>
+    <li><a href="#s7">Your first report</a></li>
+    <li><a href="#s8">Your second report</a></li>
+    <li><a href="#s9">Where your reports are kept</a></li>
+    <li><a href="#s10">Sending your reports</a></li>
+    <li><a href="#s11">Bug or Feature, and writing good answers</a></li>
+    <li><a href="#s12">Handy extras</a></li>
+    <li><a href="#s13">Troubleshooting and questions</a></li>
+  </ol>
+</nav>
+
+<!-- 1 -->
+<section class="card" id="s1">
+  <div class="keep">
+  <h2><span class="num">1</span>Create your reports folder</h2>
+  <p>Do this first. Your reports need a folder of their own, and Chrome is fussy about where that folder lives.</p>
+  <ol>
+    <li>Go to your Desktop, or another place you will remember.</li>
+    <li>Right-click an empty space and choose <strong>New</strong>, then <strong>Folder</strong>.</li>
+    <li>Name the new folder exactly <code>BUG_REPORTS</code> and press <span class="kbd">Enter</span>.</li>
+  </ol>
+  <p>Why a new folder? Chrome refuses to save into your Desktop, Documents or Downloads folders themselves. A folder <em>inside</em> one of them is fine. That is why <code>BUG_REPORTS</code> must be its own folder.</p>
+  <p class="see">You should see a new folder called <strong>BUG_REPORTS</strong> on your Desktop. Leave it empty. Bug Report fills it for you.</p>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="card" id="s2">
+  <div class="keep">
+  <h2><span class="num">2</span>Unzip the extension</h2>
+  <p>You received a file called <code>BugReport-extension-1.2.2.zip</code>. Chrome can't use the zip directly, so you need to unzip (extract) it first.</p>
+
+  <div class="callout">
+    <p class="label">Unzip it somewhere permanent</p>
+    <p>Chrome runs Bug Report straight from the folder you unzip into. Put it somewhere it can stay, such as your <strong>Documents</strong> folder. Don't leave it in a temporary place, and don't delete or move that folder later. If you do, the extension stops working.</p>
+  </div>
+
+  <div class="step">
+    <p class="step-title"><span class="sub">2a</span>Right-click the zip file and choose <strong>Extract All...</strong></p>
+    <figure>
+      <img src="{{01-extract-all-menu.png}}" alt="File Explorer with the BugReport zip file right-clicked and the menu open, showing Extract All near the middle">
+      <figcaption>Your menu may have different items in it. Look for Extract All.</figcaption>
+    </figure>
+  </div>
+  </div>
+
+  <div class="step">
+    <p class="step-title"><span class="sub">2b</span>Choose where to put it, then click <strong>Extract</strong></p>
+    <p>Click <strong>Browse...</strong> and pick your Documents folder, or type a path such as <code>C:\Users\YourName\Documents\BugReport</code>. The path in the picture below was only used for this guide, and yours will be different.</p>
+    <figure class="narrow">
+      <img src="{{02-extract-wizard.png}}" alt="The Extract Compressed (Zipped) Folders window with a destination path box, a Browse button and an Extract button">
+      <figcaption>The Extract window. Check the path in the box, then click Extract.</figcaption>
+    </figure>
+  </div>
+
+  <div class="step">
+    <p class="step-title"><span class="sub">2c</span>Check the folder</p>
+    <figure>
+      <img src="{{03-extracted-folder.png}}" alt="The extracted BugReport folder containing nine files including manifest.json, background.js, report.html and README.md">
+      <figcaption>The unzipped folder. Remember where it is, as you will pick it in Step 5.</figcaption>
+    </figure>
+    <p class="see">You should see nine files, including one called <strong>manifest.json</strong>.</p>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="card" id="s3">
+  <div class="keep">
+  <h2><span class="num">3</span>Open Chrome's extensions page</h2>
+  <p>Open Google Chrome. Click in the address bar at the top, type <code>chrome://extensions</code> and press <span class="kbd">Enter</span>.</p>
+  <figure>
+    <img src="{{04-address-bar-chrome-extensions.png}}" alt="Chrome with chrome://extensions typed into the address bar and a list of suggestions below it, with chrome://extensions at the top">
+    <figcaption>Type chrome://extensions, then press Enter or click the top suggestion.</figcaption>
+  </figure>
+  <p>Another way: click the <strong>&#8942;</strong> menu (three dots, top right of Chrome), then <strong>Extensions</strong>, then <strong>Manage Extensions</strong>.</p>
+  <p class="see">You should see a page titled <strong>Extensions</strong>.</p>
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="card" id="s4">
+  <div class="keep">
+  <h2><span class="num">4</span>Turn on Developer mode</h2>
+  <p>Bug Report is installed from a file rather than from the Chrome Web Store. Chrome only allows that when <strong>Developer mode</strong> is on. It is a normal Chrome setting and is safe to use.</p>
+
+  <div class="step">
+    <p class="step-title"><span class="sub">4a</span>Click the <strong>Developer mode</strong> switch at the top right</p>
+    <figure>
+      <img src="{{05-extensions-devmode-off.png}}" alt="The Chrome Extensions page with the Developer mode switch at the top right highlighted in red, currently off">
+      <figcaption>Developer mode is off. Click the switch.</figcaption>
+    </figure>
+  </div>
+  </div>
+
+  <div class="step">
+    <p class="step-title"><span class="sub">4b</span>Check it is on</p>
+    <figure>
+      <img src="{{06-devmode-on-load-unpacked.png}}" alt="The Extensions page with Developer mode switched on and a new row of buttons: Load unpacked, Pack extension and Update">
+      <figcaption>Developer mode is on, and three new buttons appear.</figcaption>
+    </figure>
+    <p class="see">The switch turns blue, and the buttons <strong>Load unpacked</strong>, <strong>Pack extension</strong> and <strong>Update</strong> appear.</p>
+    <p>Leave Developer mode switched on. If you turn it off later, Chrome turns Bug Report off too.</p>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="card" id="s5">
+  <div class="keep">
+  <h2><span class="num">5</span>Load the extension</h2>
+
+  <div class="step">
+    <p class="step-title"><span class="sub">5a</span>Click <strong>Load unpacked</strong></p>
+    <p>It is the button highlighted in the picture in Step 4b. A window opens called "Select the extension directory."</p>
+  </div>
+
+  <div class="step">
+    <p class="step-title"><span class="sub">5b</span>Pick the folder you unzipped in Step 2</p>
+    <p>Go to the folder you unzipped, the one that has <strong>manifest.json</strong> inside it. Click it once so it is highlighted, then click <strong>Select Folder</strong>.</p>
+    <figure>
+      <img src="{{07-load-unpacked-folder-chooser.png}}" alt="The Select the extension directory window with the BugReport folder highlighted and the Select Folder and Cancel buttons at the bottom">
+      <figcaption>"Select the extension directory." Highlight the unzipped folder and click Select Folder.</figcaption>
+    </figure>
+  </div>
+  </div>
+
+  <div class="step">
+    <p class="step-title"><span class="sub">5c</span>Check it has loaded</p>
+    <figure>
+      <img src="{{08-extension-loaded.png}}" alt="The Extensions page now showing a Bug Report 1.2.2 card with its switch turned on">
+      <figcaption>Bug Report is now listed on the Extensions page.</figcaption>
+    </figure>
+    <p class="see">You should see a card called <strong>Bug Report 1.2.2</strong> with its blue switch turned on.</p>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="card" id="s6">
+  <div class="keep">
+  <h2><span class="num">6</span>Pin the button to your toolbar</h2>
+  <p>Pinning puts the Bug Report button next to the address bar, so it is always one click away.</p>
+
+  <div class="step">
+    <p class="step-title"><span class="sub">6a</span>Click the puzzle piece, then the pin next to Bug Report</p>
+    <p>The puzzle piece icon is at the top right of Chrome, next to the address bar. In the list that opens, click the <strong>pin</strong> icon on the Bug Report row.</p>
+    <figure>
+      <img src="{{09-puzzle-menu-pin.png}}" alt="The Chrome extensions menu opened from the puzzle piece icon, with the pin icon next to Bug Report highlighted in red">
+      <figcaption>Click the pin next to Bug Report.</figcaption>
+    </figure>
+  </div>
+  </div>
+
+  <div class="step">
+    <p class="step-title"><span class="sub">6b</span>Check the button is there</p>
+    <figure>
+      <img src="{{10-toolbar-pinned.png}}" alt="The Chrome toolbar with a grey square B button highlighted next to the puzzle piece icon">
+      <figcaption>The grey <strong>B</strong> button is Bug Report.</figcaption>
+    </figure>
+    <p class="see">You should see a small grey <strong>B</strong> button at the top right of Chrome. That's it, Bug Report is installed.</p>
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="card" id="s7">
+  <div class="keep">
+  <h2><span class="num">7</span>Your first report</h2>
+  <p>The first report takes a few extra clicks, because you tell Chrome which folder to save into. After that, it is much quicker.</p>
+
+  <div class="step">
+    <p class="step-title"><span class="sub">7a</span>Go to the page with the problem and click the <strong>B</strong> button</p>
+    <figure>
+      <img src="{{11a-wikipedia-click-bug-report.png}}" alt="A Wikipedia article open in Chrome, with the B button in the toolbar highlighted in red">
+      <figcaption>Any website will do. This example uses a Wikipedia page.</figcaption>
+    </figure>
+  </div>
+  </div>
+
+  <div class="step">
+    <p class="step-title"><span class="sub">7b</span>Wait a moment while it takes the picture</p>
+    <p>A bar appears at the top of the page saying <strong>'Bug Report' started debugging this browser</strong>, with a <strong>Cancel</strong> button. This is normal. Chrome shows it every time Bug Report takes a full-page picture. It closes by itself after a few seconds. Please don't click Cancel.</p>
+    <figure>
+      <img src="{{11-debugging-infobar.png}}" alt="The Wikipedia page with a bar across the top reading 'Bug Report' started debugging this browser and a Cancel button">
+      <figcaption>The debugging bar is expected. It goes away on its own.</figcaption>
+    </figure>
+  </div>
+
+  <div class="step">
+    <p class="step-title"><span class="sub">7c</span>A new tab opens with your report form</p>
+    <figure>
+      <img src="{{12-report-tab.png}}" alt="The Report a bug or feature page in a new tab, showing the page title and address, a small picture of the page, the Bug and Feature choice, two empty question boxes, a name box and a Save report button">
+      <figcaption>The report form. The small picture is the screenshot. Click it to see it full size.</figcaption>
+    </figure>
+    <p class="see">You should see <strong>Report a bug or feature</strong>, the page's name and address, and a small picture of the page.</p>
+  </div>
+
+  <div class="step">
+    <p class="step-title"><span class="sub">7d</span>Fill in the form</p>
+    <p>Choose <strong>Bug</strong> or <strong>Feature</strong> at <strong>Type</strong>. Answer both questions and type your name. Then click <strong>Save report</strong>. See <a href="#s11">section 11</a> for tips on good answers.</p>
+    <figure>
+      <img src="{{13-form-filled.png}}" alt="The report form filled in: Bug selected, an answer in each question box, the name Alex Tester, and the Save report button">
+      <figcaption>A filled-in Bug report, ready to save.</figcaption>
+    </figure>
+  </div>
+
+  <div class="step">
+    <p class="step-title"><span class="sub">7e</span>Chrome asks where to save</p>
+    <p>A window opens called "Select where this site can save changes". It may open in your Documents folder, as here.</p>
+    <figure>
+      <img src="{{14-save-folder-picker.png}}" alt="The Select where this site can save changes window, open at the Documents folder, with New folder, Select Folder and Cancel buttons">
+      <figcaption>"Select where this site can save changes".</figcaption>
+    </figure>
+  </div>
+
+  <div class="step">
+    <p class="step-title"><span class="sub">7f</span>Go to your BUG_REPORTS folder</p>
+    <p>Find the <code>BUG_REPORTS</code> folder you made in <a href="#s1">Step 1</a>. If you made it on your Desktop, click <strong>Desktop</strong> in the list on the left of the window.</p>
+    <p>If you skipped Step 1, you can make the folder here instead. Go to your Desktop, click <strong>New folder</strong>, type <code>BUG_REPORTS</code> and press <span class="kbd">Enter</span>.</p>
+    <figure>
+      <img src="{{15-new-folder-BUG_REPORTS.png}}" alt="The save window showing the Desktop, with a new folder being named BUG_REPORTS">
+      <figcaption>Only if you skipped Step 1: making the folder from inside the save window.</figcaption>
+    </figure>
+  </div>
+
+  <div class="step">
+    <p class="step-title"><span class="sub">7g</span>Click <strong>BUG_REPORTS</strong> once, then click <strong>Select Folder</strong></p>
+    <figure>
+      <img src="{{16-BUG_REPORTS-selected.png}}" alt="The save window with the BUG_REPORTS folder highlighted and its name shown in the Folder box at the bottom">
+      <figcaption>The Folder box at the bottom should say BUG_REPORTS.</figcaption>
+    </figure>
+    <p class="see">Check that the <strong>Folder:</strong> box at the bottom says <strong>BUG_REPORTS</strong> before you click Select Folder.</p>
+  </div>
+
+  <div class="callout">
+    <p class="label">If you see "Can't open this folder"</p>
+    <p>The message says "Bug Report can't open this folder because it contains system files". It means you picked Desktop, Documents or Downloads itself, rather than the folder inside it. Click <strong>Choose a different folder</strong> and pick <code>BUG_REPORTS</code>.</p>
+    <figure>
+      <img src="{{17-blocked-desktop-cant-open.png}}" alt="A Chrome message reading Can't open this folder, Bug Report can't open this folder because it contains system files, with Choose a different folder and Cancel buttons">
+      <figcaption>Click Choose a different folder, then pick BUG_REPORTS.</figcaption>
+    </figure>
+  </div>
+
+  <div class="step">
+    <p class="step-title"><span class="sub">7h</span>Click <strong>Allow</strong></p>
+    <p>Chrome asks "Allow this site to edit files?" and says "Bug Report will be able to edit files in BUG_REPORTS". Click <strong>Allow</strong>. This only lets Bug Report write into that one folder.</p>
+    <figure>
+      <img src="{{18-allow-edit-files.png}}" alt="A Chrome message reading Allow this site to edit files? Bug Report will be able to edit files in BUG_REPORTS, with the Allow button highlighted in red and a Don't allow button beside it">
+      <figcaption>Click Allow, not Don't allow.</figcaption>
+    </figure>
+  </div>
+
+  <div class="step">
+    <p class="step-title"><span class="sub">7i</span>Your report is saved</p>
+    <figure>
+      <img src="{{19-saved-success.png}}" alt="The report page showing the green message Saved to BUG_REPORTS/reports.csv, the screenshot file name, and a Close tab button">
+      <figcaption>Saved. You can click Close tab.</figcaption>
+    </figure>
+    <p class="see">You should see the green message <strong>Saved to BUG_REPORTS/reports.csv</strong>. Below it is a line starting "Screenshot: screenshots/" with the picture's name, ending "Zip the BUG_REPORTS folder and send it when you are ready." Click <strong>Close tab</strong> to go back to what you were doing.</p>
+  </div>
+</section>
+
+<!-- 8 -->
+<section class="card" id="s8">
+  <div class="keep">
+  <h2><span class="num">8</span>Your second report</h2>
+  <p>Your next report has one more question from Chrome. Answer it the right way and you won't be asked again.</p>
+
+  <div class="step">
+    <p class="step-title"><span class="sub">8a</span>Make a report as before and click <strong>Save report</strong></p>
+    <p>Click the <strong>B</strong> button on the page, fill in the form and click Save report. This time the form shows <strong>Saving to: BUG_REPORTS</strong>, and your name is already filled in.</p>
+    <figure>
+      <img src="{{20a-feature-form-filled.png}}" alt="A Feature report form filled in, with the line Saving to: BUG_REPORTS and a Change folder button above the Save report button">
+      <figcaption>A Feature report. Note the Saving to line and the Change folder button.</figcaption>
+    </figure>
+  </div>
+  </div>
+
+  <div class="step">
+    <p class="step-title"><span class="sub">8b</span>Click <strong>Allow on every visit</strong></p>
+    <p>A box appears at the top left saying "Bug Report wants to" and "View and edit files from the last time you visited this site:", with <code>BUG_REPORTS</code> below. There are three buttons.</p>
+    <figure>
+      <img src="{{20b-restore-prompt-allow-every-visit.png}}" alt="A Chrome box reading Bug Report wants to View and edit files from the last time you visited this site, showing BUG_REPORTS, with buttons Allow this time, Allow on every visit (highlighted in red) and Don't allow">
+      <figcaption>Choose the middle button, Allow on every visit.</figcaption>
+    </figure>
+    <div class="callout big">
+      <p class="label">Choose "Allow on every visit", not "Allow this time"</p>
+      <p><strong>Allow on every visit</strong> means Chrome remembers your choice, and you won't see this box again. If you pick <strong>Allow this time</strong>, Chrome will ask you again on every single report.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <p class="step-title"><span class="sub">8c</span>Saved again</p>
+    <figure>
+      <img src="{{20c-second-report-saved.png}}" alt="The report page showing Saved to BUG_REPORTS/reports.csv for the Feature report">
+      <figcaption>The second report is saved in the same folder.</figcaption>
+    </figure>
+    <p class="see">From now on there are no more prompts. You click the B button, answer the questions and click Save report.</p>
+  </div>
+</section>
+
+<!-- 9 -->
+<section class="card" id="s9">
+  <div class="keep">
+  <h2><span class="num">9</span>Where your reports are kept</h2>
+  <p>Open your <code>BUG_REPORTS</code> folder in File Explorer. All your reports are in it.</p>
+  <div class="tree">BUG_REPORTS
+  reports.csv       one row per report, opens in Excel
+  screenshots
+    2026-10-06 2054 Bug - Bug tracking system - Wikipedia.png
+    2026-10-06 2055 Feature - Example Domain.png</div>
+
+  <div class="step">
+    <p class="step-title"><span class="sub">9a</span>The folder holds one list and one folder of pictures</p>
+    <figure>
+      <img src="{{21a-BUG_REPORTS-folder.png}}" alt="File Explorer showing the BUG_REPORTS folder with a screenshots folder and a reports.csv file">
+      <figcaption>Inside BUG_REPORTS: the screenshots folder and reports.csv.</figcaption>
+    </figure>
+  </div>
+  </div>
+
+  <div class="step">
+    <p class="step-title"><span class="sub">9b</span>The screenshots folder holds the pictures</p>
+    <p>Each picture is named with the date, time, type and page title, so they are easy to tell apart.</p>
+    <figure>
+      <img src="{{21b-screenshots-folder.png}}" alt="File Explorer showing the screenshots folder with two PNG files named by date, time, Bug or Feature, and page title">
+      <figcaption>One picture per report.</figcaption>
+    </figure>
+  </div>
+
+  <div class="step">
+    <p class="step-title"><span class="sub">9c</span>reports.csv has one row per report</p>
+    <p>Double-click <code>reports.csv</code> to open it in Excel. Each row is one report, with your answers, the page address, your name and the name of its screenshot.</p>
+    <figure>
+      <img src="{{22-reports-csv-in-excel.png}}" alt="reports.csv open in Excel with a header row and two report rows showing id, submittedAt, type, user, url, title, q1_label and q1 columns">
+      <figcaption>reports.csv in Excel, with one row for each of the two reports.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="card" id="s10">
+  <div class="keep">
+  <h2><span class="num">10</span>Sending your reports</h2>
+  <p>When you are ready to send your reports, zip the whole folder.</p>
+  <ol>
+    <li>Right-click the <code>BUG_REPORTS</code> folder.</li>
+    <li>Choose <strong>Send to</strong>, then <strong>Compressed (zipped) folder</strong>. On Windows 11 you may need to click <strong>Show more options</strong> first. Or choose <strong>Compress to ZIP file</strong> if you see it.</li>
+    <li>A new file called <code>BUG_REPORTS.zip</code> appears next to the folder.</li>
+    <li>Email or upload that zip file, as you have been asked to.</li>
+  </ol>
+  <p>Keep collecting reports in the same <code>BUG_REPORTS</code> folder afterwards. New reports are added to the list, and nothing already in it is changed.</p>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="card" id="s11">
+  <div class="keep">
+  <h2><span class="num">11</span>Bug or Feature, and writing good answers</h2>
+  <p>Pick the type that fits, and the questions change to match.</p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Type</th><th>Use it when</th><th>Question 1</th><th>Question 2</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Bug</strong></td><td>Something is broken or doesn't work as it should.</td><td>What were you trying to do?</td><td>What went wrong?</td></tr>
+        <tr><td><strong>Feature</strong></td><td>It works, but you wish it did something more or different.</td><td>What couldn't you do?</td><td>What would you like different?</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h3>Tips for good answers</h3>
+  <ul>
+    <li><strong>Be specific.</strong> "The Save button on the Contact page does nothing" helps far more than "saving is broken".</li>
+    <li><strong>Give the steps.</strong> Say what you clicked, in order, so someone else can make the same thing happen.</li>
+    <li><strong>Say what you expected.</strong> Then say what happened instead. Copy any error message word for word.</li>
+    <li><strong>One issue per report.</strong> If you find three problems, make three reports. Each one gets its own picture.</li>
+    <li><strong>Report from the right page.</strong> Click the B button while the problem is on screen, so the picture shows it.</li>
+  </ul>
+  </div>
+</section>
+
+<!-- 12 -->
+<section class="card" id="s12">
+  <h2><span class="num">12</span>Handy extras</h2>
+
+  <h3>Keyboard shortcut</h3>
+  <p>Instead of clicking the B button, you can press <span class="kbd">Alt</span> + <span class="kbd">Shift</span> + <span class="kbd">B</span> on the page you want to report.</p>
+
+  <h3>Your name</h3>
+  <p>You only type your name once. Bug Report remembers it after your first report and fills it in for you next time.</p>
+
+  <h3>Changing the folder</h3>
+  <p>To save into a different folder, click <strong>Change folder</strong> next to "Saving to:" on the report form (you can see it in Step 8a). Pick the new folder in the same way as before.</p>
+  <div class="keep">
+  <p>You can also change it in the extension's settings page. Go to <code>chrome://extensions</code>, click <strong>Details</strong> on the Bug Report card, scroll down and click <strong>Extension options</strong>.</p>
+  <figure>
+    <img src="{{23a-details-extension-options.png}}" alt="The Bug Report details page in Chrome with the Extension options row highlighted in red near the bottom">
+    <figcaption>Details, then Extension options.</figcaption>
+  </figure>
+  </div>
+  <div class="keep">
+  <p>The settings page shows where reports are saved. It has a <strong>Choose folder</strong> button to pick a folder, a <strong>Forget folder</strong> button to clear it, and a box for your name with a <strong>Save</strong> button.</p>
+  <figure>
+    <img src="{{23b-options-page.png}}" alt="The Bug Report settings page with the heading Where reports are saved, Choose folder and Forget folder buttons, the line Folder: BUG_REPORTS, and a Your name box with a Save button">
+    <figcaption>The settings page. The Folder line shows which folder is in use.</figcaption>
+  </figure>
+  </div>
+</section>
+
+<!-- 13 -->
+<section class="card" id="s13">
+  <h2><span class="num">13</span>Troubleshooting and questions</h2>
+
+  <div class="qa">
+    <p class="q">Chrome asks for permission every time I save a report.</p>
+    <p>You probably chose "Allow this time". Next time the box appears, choose <strong>Allow on every visit</strong>. See <a href="#s8">section 8</a>. After a full restart of Chrome it may ask once more. Choose Allow on every visit again.</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">It says "Can't open this folder".</p>
+    <p>You picked Desktop, Documents or Downloads itself. Click <strong>Choose a different folder</strong> and pick the <code>BUG_REPORTS</code> folder inside it. See <a href="#s7">section 7</a>.</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">I clicked "Don't allow" by mistake.</p>
+    <p>Nothing was saved, and your answers are still on the form. Click <strong>Save report</strong> again and choose <strong>Allow</strong> this time. The form may also show <strong>Try again</strong> and <strong>Choose another folder</strong> buttons. Either one works. You can also use <strong>Change folder</strong> to pick the folder again.</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">I closed the folder window without choosing a folder.</p>
+    <p>Nothing was saved yet. Click <strong>Save report</strong> again and the window opens again.</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">It says "No screenshot could be taken".</p>
+    <p>Chrome doesn't let any extension take pictures of its own pages, such as <code>chrome://</code> pages or the Chrome Web Store. This is expected. The report still saves, just without a picture.</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">A bar says "'Bug Report' started debugging this browser".</p>
+    <p>That's normal. Chrome shows it whenever Bug Report takes a full-page picture. It closes by itself after a few seconds. Please don't click Cancel while it is showing.</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">The picture of a very long page is cut off.</p>
+    <p>Very long pages are cut off at about 16,000 pixels tall. The form tells you when this happens. If the problem is further down, scroll to it and mention where it is in your answer.</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">The B button has disappeared, or Bug Report is turned off.</p>
+    <p>Go to <code>chrome://extensions</code> and check two things. First, <strong>Developer mode</strong> must still be on (Step 4). Second, the folder you unzipped in Step 2 must still be where it was. If it was moved or deleted, unzip the file again and repeat Step 5. If Bug Report is listed but switched off, turn its blue switch back on. If it is on but not in the toolbar, pin it again (Step 6).</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">Can I use Brave, Microsoft Edge or another browser?</p>
+    <p>Please use Google Chrome. Other browsers handle the save folder differently, and your reports may not save correctly. Get Chrome free from <span class="mono">google.com/chrome</span>.</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">Is anything sent over the internet? What about my privacy?</p>
+    <p>No. Bug Report doesn't send anything anywhere. Your reports and pictures stay on your PC, in your <code>BUG_REPORTS</code> folder, until you zip the folder and send it yourself. The picture only shows the page you were on when you clicked the button, so check it doesn't show anything private before you send it.</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">Chrome warns that Bug Report can "read and change all your data on all websites".</p>
+    <p>Chrome shows this because Bug Report needs permission to take a full-page picture of whatever page you are on. It only does this when you click the B button or press the shortcut, and only on that tab.</p>
+  </div>
+</section>
+
+<footer>Bug Report version 1.2.2. Install and user guide.</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bug Report</title>
+<link rel="stylesheet" href="report.css">
+</head>
+<body>
+<main>
+  <h1>Report a bug or feature</h1>
+
+  <section class="source" aria-label="Page being reported">
+    <div class="source-title" id="pageTitle"></div>
+    <div class="source-url" id="pageUrl"></div>
+  </section>
+
+  <section class="shot">
+    <img id="thumb" alt="Screenshot" hidden tabindex="0" title="Open full size in a new tab">
+    <p id="shotNote" class="note" hidden></p>
+    <p id="noShot" class="warning" hidden></p>
+  </section>
+
+  <form id="reportForm" novalidate>
+    <fieldset class="kind">
+      <legend>Type</legend>
+      <input type="radio" name="kind" id="kindBug" value="bug" checked>
+      <label for="kindBug">Bug</label>
+      <input type="radio" name="kind" id="kindFeature" value="feature">
+      <label for="kindFeature">Feature</label>
+    </fieldset>
+
+    <div class="field">
+      <label for="q1" id="q1Label">What were you trying to do?</label>
+      <textarea id="q1" name="q1" rows="4" required></textarea>
+    </div>
+    <div class="field">
+      <label for="q2" id="q2Label">What went wrong?</label>
+      <textarea id="q2" name="q2" rows="4" required></textarea>
+    </div>
+    <div class="field">
+      <label for="userName">Your name</label>
+      <input type="text" id="userName" name="userName" autocomplete="name" required>
+      <p id="nameHint" class="note" hidden>Please enter your name. It will be remembered for next time.</p>
+    </div>
+
+    <p id="error" class="error" role="alert" hidden></p>
+
+    <div id="refused" class="refused" hidden>
+      <p>Folder access was refused.</p>
+      <div class="buttons">
+        <button type="button" id="tryAgainBtn">Try again</button>
+        <button type="button" id="chooseAnotherBtn">Choose another folder</button>
+      </div>
+    </div>
+
+    <div class="folder-line">
+      <span id="folderLine" class="note"></span>
+      <button type="button" id="changeFolderBtn" class="small" hidden>Change folder</button>
+    </div>
+
+    <div class="buttons">
+      <button type="submit" id="saveBtn" class="primary">Save report</button>
+      <button type="button" id="cancelBtn">Cancel</button>
+    </div>
+  </form>
+
+  <section id="done" hidden>
+    <p id="saved" class="success" role="status"></p>
+    <p id="savedHint" class="note"></p>
+    <button type="button" id="closeBtn" class="primary">Close tab</button>
+  </section>
+</main>
+<script src="db.js"></script>
+<script src="report.js"></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Bug Report",
+  "version": "1.2.2",
+  "description": "Report bugs and feature requests with a full page screenshot. Saves to one reports.csv and a screenshots folder in a folder you choose.",
+  "minimum_chrome_version": "118",
+  "permissions": ["debugger", "activeTab", "downloads", "storage"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Report a bug or feature"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+Shift+B"
+      }
+    }
+  }
+}
